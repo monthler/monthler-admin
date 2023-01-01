@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lagn="ko"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <!-- config fragment 사용 -->
+    <th:block th:replace="fragments/config :: configFragment"></th:block>
+    <!-- content script -->
+    <th:block layout:fragment="css"></th:block>
+</head>
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- sidebar fragment 사용 -->
+    <th:block th:replace="fragments/sidebar :: sidebarFragment"></th:block>
+
+    <!-- content fragment 사용 -->
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <th:block th:replace="fragments/topbar :: topbarFragment"></th:block>
+            <th:block layout:fragment="content"></th:block>
+            <th:block th:replace="fragments/footer :: footerFragment"></th:block>
+        </div>
+    </div>
+    <!-- // Content Wrapper -->
+</div>
+
+<!-- bottom fragment 사용 -->
+<th:block th:replace="fragments/bottom :: bottomFragment"></th:block>
+<!-- content script -->
+<th:block layout:fragment="script"></th:block>
+</body>
+</html>
