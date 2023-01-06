@@ -1,20 +1,30 @@
 package com.example.monthleradmin.modules.govnotice.controller;
 
+import com.example.monthleradmin.modules.govnotice.domain.GovNotice;
+import com.example.monthleradmin.modules.govnotice.dto.GovNoticeRequestDto;
 import com.example.monthleradmin.modules.govnotice.form.GovNoticeForm;
 import com.example.monthleradmin.modules.govnotice.service.GovNoticeService;
+import com.example.monthleradmin.modules.member.domain.Member;
+import com.example.monthleradmin.modules.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class GovNoticeController {
 
     private final GovNoticeService govNoticeService;
+    private final MemberService memberService;
+    private final ModelMapper modelMapper;
 
     @GetMapping("/gov-notice")
     public String govNoticeListView() {
@@ -25,6 +35,17 @@ public class GovNoticeController {
     public String newGovNoticeForm(Model model) {
         model.addAttribute(new GovNoticeForm());
         return "pages/gov-notice/add";
+    }
+
+    @PostMapping("/gov-notice/add")
+    public String newGovNoticeSubmit(@Valid GovNoticeForm govNoticeForm, Errors errors, Model model) {
+        if (errors.hasErrors()) {
+            //model.addAttribute(account);
+            return "pages/gov-notice/add";
+        }
+        Member member = memberService.getMember(1L); // TODO: Security 적용 시 코드 변경
+        govNoticeService.createGovNotice(modelMapper.map(govNoticeForm, GovNotice.class), member);
+        return "redirect:/gov-notice";
     }
 
 //    @PostMapping(value = "/api/gov-notice")

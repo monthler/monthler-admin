@@ -30,13 +30,28 @@
     <script>
         $(function() {
 
-            // rome(inline_cal, { time: false });
-
-
-            rome(inline_cal, {time: false, inputFormat: 'MMMM DD, YYYY'}).on('data', function (value) {
-                result.value = value;
+            // 체류 시작/종료일
+            rome(stayStDt, {
+                dateValidator: rome.val.beforeEq(stayEdDt),
+                time: false
+            });
+            rome(stayEdDt, {
+                dateValidator: rome.val.afterEq(stayStDt),
+                time: false
             });
 
+            // 모집 시작/종료일
+            rome(recruitmentStDt, {
+                dateValidator: rome.val.beforeEq(recruitmentEdDt),
+                time: false
+            });
+            rome(recruitmentEdDt, {
+                dateValidator: rome.val.afterEq(recruitmentStDt),
+                time: false
+            });
+
+            // 선정 발표일
+            rome(releaseDt, { time: false });
         });
 
     </script>
@@ -48,259 +63,290 @@
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">지자체 공고 등록</h1>
     <p class="mb-4">지자체 공고 등록 페이지 입니다.</p>
-
+    <hr>
     <!-- Content -->
-    <form>
-        <div class="row mb-3">
-            <label for="title" class="col-sm-2 col-form-label">제목</label>
-            <div class="col-sm-5">
-                <input type="text" class="form-control" id="title" placeholder="제목">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label for="region" class="col-sm-2 col-form-label">지역</label>
-            <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" id="region">
-                    <option value="경남" selected>경남</option>
-                    <option value="경북">경북</option>
-                    <option value="전남">전남</option>
-                    <option value="전북">전북</option>
-                    <option value="충남">충남</option>
-                    <option value="강원도">강원도</option>
-                    <option value="제주도">제주도</option>
-                    <option value="그외">그외</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label for="city" class="col-sm-2 col-form-label">도시</label>
-            <div class="col-sm-2">
-                <input type="text" class="form-control" id="city" placeholder="도시">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">카테고리</label>
-            <div class="col-sm-10">
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="govNoticeThemeCheck1" value="여행">
-                    <label class="form-check-label" for="govNoticeThemeCheck1">여행</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="govNoticeThemeCheck2" value="워케이션">
-                    <label class="form-check-label" for="govNoticeThemeCheck2">워케이션</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="govNoticeThemeCheck3" value="프로젝트">
-                    <label class="form-check-label" for="govNoticeThemeCheck3">프로젝트</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="checkbox" id="govNoticeThemeCheck4" value="귀농귀촌">
-                    <label class="form-check-label" for="govNoticeThemeCheck4">귀농귀촌</label>
-                </div>
-            </div>
-        </div>
-
-        <hr>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">체류기간</label>
-            <div class="col-sm-10">
-                <form action="#" class="row">
-                    <div class="col-md-12">
-                            체류 시작일, 체류 종료일 date picker 넣기
-<!--                        <div id="inline_cal"></div>-->
+    <div>
+        <form th:action="@{/gov-notice/add}" th:object="${govNoticeForm}" method="post">
+                <div class="row mb-3">
+                    <label for="title" class="col-sm-1 col-form-label">제목</label>
+                    <div class="col-sm-5">
+                        <input type="text" th:field="*{title}" class="form-control" id="title" placeholder="제목">
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
 
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">미션 박수</label>
-            <div class="col-sm-10 d-flex align-items-center">
-                <input type="number" class="form-control" style="width:90px;" id="minNight" placeholder="최소">
-                <span class="mx-1">~</span>
-                <input type="number" class="form-control" style="width:90px;" id="maxNight" placeholder="최대">
-                <span class="mx-1">박</span>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">모집 인원</label>
-            <div class="col-sm-10 d-flex align-items-center">
-                <input type="number" class="form-control" style="width:90px;" id="recruitmentTeam">
-                <span class="ml-1 mr-3">팀</span>
-                <input type="number" class="form-control" style="width:90px;" id="minPeople">
-                <span class="mx-1">~</span>
-                <input type="number" class="form-control" style="width:90px;" id="maxPeople">
-                <span class="mx-1">명</span>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">총 지원금</label>
-            <div class="col-sm-10 d-flex align-items-center">
-                <input type="number" class="form-control" style="width:90px;" id="supportFund">
-                <span class="ml-1">원</span>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">모집 기간</label>
-            <div class="col-sm-10">
-                <form action="#" class="row">
-                    <div class="col-md-12">
-                        모집 시작일, 모집 종료일 date picker 넣기
-                        <!--                        <div id="inline_cal"></div>-->
+                <div class="row mb-3">
+                    <label for="region" class="col-sm-1 col-form-label">지역</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" aria-label="Default select example" id="region" th:field="*{region}">
+                            <option value="경남" selected>경남</option>
+                            <option value="경북">경북</option>
+                            <option value="전남">전남</option>
+                            <option value="전북">전북</option>
+                            <option value="충남">충남</option>
+                            <option value="강원도">강원도</option>
+                            <option value="제주도">제주도</option>
+                            <option value="그외">그외</option>
+                        </select>
                     </div>
-                </form>
-            </div>
-        </div>
+                </div>
 
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">선정 발표</label>
-            <div class="col-sm-10">
-                <form action="#" class="row">
-                    <div class="col-md-12">
-                        선정 발표일 date picker 넣기
-                        <!--                        <div id="inline_cal"></div>-->
+                <div class="row mb-3">
+                    <label for="city" class="col-sm-1 col-form-label">도시</label>
+                    <div class="col-sm-2">
+                        <input type="text" th:field="*{city}" class="form-control" id="city" placeholder="도시">
                     </div>
-                </form>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">아이동반<br>지원여부</label>
-            <div class="col-sm-10">
-                <select class="form-select" aria-label="Default select example" id="withChildYn">
-                    <option value="Y" selected>가능</option>
-                    <option value="N">불가능</option>
-                </select>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">이메일</label>
-            <div class="col-sm-3">
-                <input type="email" class="form-control" id="email" placeholder="monthler@email.com">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">전화</label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="phoneNumber" placeholder="010-1234-5678">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">관련파일</label>
-            <div class="col-sm-3">
-                <input class="form-control" type="text" id="refFileUrl" placeholder="파일 경로 URL">
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <label class="col-sm-2 col-form-label">모집공고</label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="noticeLink" placeholder="web link">
-            </div>
-        </div>
-
-        <hr>
-
-        <div class="mb-3">
-            <label for="mainDesc" class="form-label">메인 설명</label>
-            <div class="col-sm-5">
-                <textarea class="form-control" id="mainDesc" rows="3"></textarea>
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label for="detailDesc" class="form-label">상세 설명</label>
-            <div class="col-sm-5">
-                <textarea class="form-control" id="detailDesc" rows="5" placeholder="editor"></textarea>
-            </div>
-        </div>
-
-        <hr>
-
-        <div class="mb-3">
-            <label for="mainDesc" class="form-label">사진 첨부</label>
-            <div class="col-sm-3 mb-1">
-                <input class="form-control" type="text" id="detailImgUrl1" placeholder="상세 이미지 URL">
-            </div>
-            <div class="col-sm-3 mb-1">
-                <input type="text" class="form-control" id="imgDescWrite1" placeholder="이미지 설명 직접 작성">
-            </div>
-            <div class="ml-3">
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-1">
-                    <label class="form-check-label" for="imgDescRadio1-1">
-                        대표 썸네일 (리스트, 상세페이지 상단에 노출)
-                    </label>
                 </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-2" checked>
-                    <label class="form-check-label" for="imgDescRadio1-2">
-                        공고문 (공고문 내용)
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-3">
-                    <label class="form-check-label" for="imgDescRadio1-3">
-                        미션보기 (미션만 캡쳐)
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-4">
-                    <label class="form-check-label" for="imgDescRadio1-4">
-                        선정기준 (선정기준만 캡쳐)
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-5">
-                    <label class="form-check-label" for="imgDescRadio1-5">
-                        지원내용 (지원내용만 캡쳐)
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-6">
-                    <label class="form-check-label" for="imgDescRadio1-6">
-                        프로그램 (일정표)
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-7">
-                    <label class="form-check-label" for="imgDescRadio1-7">
-                        프로그램 분위기
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-8">
-                    <label class="form-check-label" for="imgDescRadio1-8">
-                        숙소
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-9">
-                    <label class="form-check-label" for="imgDescRadio1-9">
-                        코워킹스페이스
-                    </label>
-                </div>
-                <div class="form-check mb-1">
-                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-10">
-                    <label class="form-check-label" for="imgDescRadio1-10">
-                        체험프로그램
-                    </label>
-                </div>
-            </div>
-        </div>
 
-        <button type="submit" class="btn btn-primary">Sign in</button>
-    </form>
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">카테고리</label>
+                    <div class="col-sm-10">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck1" value="여행">
+                            <label class="form-check-label" for="govNoticeThemeCheck1">여행</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck2" value="워케이션">
+                            <label class="form-check-label" for="govNoticeThemeCheck2">워케이션</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck3" value="프로젝트">
+                            <label class="form-check-label" for="govNoticeThemeCheck3">프로젝트</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck4" value="귀농귀촌">
+                            <label class="form-check-label" for="govNoticeThemeCheck4">귀농귀촌</label>
+                        </div>
+                    </div>
+                </div>
 
+                <hr>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">체류기간</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="stayStDt">체류 시작일</label>
+                                            <input type="text" th:field="*{stayStDt}" class="form-control" id="stayStDt" placeholder="YYYY-MM-DD">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="stayEdDt">체류 종료일</label>
+                                            <input type="text" th:field="*{stayEdDt}" class="form-control" id="stayEdDt" placeholder="YYYY-MM-DD">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">미션 박수</label>
+                    <div class="col-sm-10 d-flex align-items-center">
+                        <input type="number" th:field="*{minNight}" class="form-control" style="width:90px;" id="minNight" placeholder="최소">
+                        <span class="mx-1">~</span>
+                        <input type="number" th:field="*{maxNight}" class="form-control" style="width:90px;" id="maxNight" placeholder="최대">
+                        <span class="mx-1">박</span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">모집 인원</label>
+                    <div class="col-sm-10 d-flex align-items-center">
+                        <input type="number" th:field="*{recruitmentTeam}" class="form-control" style="width:90px;" id="recruitmentTeam">
+                        <span class="ml-1 mr-3">팀</span>
+                        <input type="number" th:field="*{minPeople}" class="form-control" style="width:90px;" id="minPeople">
+                        <span class="mx-1">~</span>
+                        <input type="number" th:field="*{maxPeople}" class="form-control" style="width:90px;" id="maxPeople">
+                        <span class="mx-1">명</span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">총 지원금</label>
+                    <div class="col-sm-10 d-flex align-items-center">
+                        <input type="number" th:field="*{supportFund}" class="form-control" style="width:90px;" id="supportFund">
+                        <span class="ml-1">원</span>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">모집 기간</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="recruitmentStDt">모집 시작일</label>
+                                            <input type="text" th:field="*{recruitmentStDt}" class="form-control" id="recruitmentStDt" placeholder="YYYY-MM-DD">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="recruitmentEdDt">모집 종료일</label>
+                                            <input type="text" th:field="*{recruitmentEdDt}" class="form-control" id="recruitmentEdDt" placeholder="YYYY-MM-DD">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">선정 발표</label>
+                    <div class="col-sm-10">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="releaseDt">선정 발표일</label>
+                                            <input type="text" th:field="*{releaseDt}" class="form-control" id="releaseDt" placeholder="YYYY-MM-DD">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">아이동반<br>지원여부</label>
+                    <div class="col-sm-10">
+                        <select class="form-select" th:field="*{withChildYn}" aria-label="Default select example" id="withChildYn">
+                            <option value="Y" selected>가능</option>
+                            <option value="N">불가능</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">이메일</label>
+                    <div class="col-sm-3">
+                        <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="monthler@email.com">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">전화</label>
+                    <div class="col-sm-3">
+                        <input type="text" th:field="*{phoneNumber}" class="form-control" id="phoneNumber" placeholder="010-1234-5678">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">관련파일</label>
+                    <div class="col-sm-3">
+                        <input class="form-control" th:field="*{refFileUrl}" type="text" id="refFileUrl" placeholder="파일 경로 URL">
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label class="col-sm-1 col-form-label">모집공고</label>
+                    <div class="col-sm-3">
+                        <input type="text" th:field="*{noticeLink}" class="form-control" id="noticeLink" placeholder="web link">
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <label for="mainDesc" class="form-label">메인 설명</label>
+                    <div class="col-sm-5">
+                        <textarea th:field="*{mainDesc}" class="form-control" id="mainDesc" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="detailDesc" class="form-label">상세 설명</label>
+                    <div class="col-sm-5">
+                        <textarea th:field="*{detailDesc}" class="form-control" id="detailDesc" rows="5" placeholder="editor"></textarea>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="mb-3">
+                    <label for="mainDesc" class="form-label">사진 첨부</label>
+                    <div class="col-sm-3 mb-1">
+                        <input class="form-control" type="text" id="detailImgUrl1" placeholder="상세 이미지 URL">
+                    </div>
+                    <div class="col-sm-3 mb-1">
+                        <input type="text" class="form-control" id="imgDescWrite1" placeholder="이미지 설명 직접 작성">
+                    </div>
+                    <div class="ml-3">
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-1">
+                            <label class="form-check-label" for="imgDescRadio1-1">
+                                대표 썸네일 (리스트, 상세페이지 상단에 노출)
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-2" checked>
+                            <label class="form-check-label" for="imgDescRadio1-2">
+                                공고문 (공고문 내용)
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-3">
+                            <label class="form-check-label" for="imgDescRadio1-3">
+                                미션보기 (미션만 캡쳐)
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-4">
+                            <label class="form-check-label" for="imgDescRadio1-4">
+                                선정기준 (선정기준만 캡쳐)
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-5">
+                            <label class="form-check-label" for="imgDescRadio1-5">
+                                지원내용 (지원내용만 캡쳐)
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-6">
+                            <label class="form-check-label" for="imgDescRadio1-6">
+                                프로그램 (일정표)
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-7">
+                            <label class="form-check-label" for="imgDescRadio1-7">
+                                프로그램 분위기
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-8">
+                            <label class="form-check-label" for="imgDescRadio1-8">
+                                숙소
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-9">
+                            <label class="form-check-label" for="imgDescRadio1-9">
+                                코워킹스페이스
+                            </label>
+                        </div>
+                        <div class="form-check mb-1">
+                            <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-10">
+                            <label class="form-check-label" for="imgDescRadio1-10">
+                                체험프로그램
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary mt-5">등록</button>
+        </form>
+    </div>
 </div>
 </html>
