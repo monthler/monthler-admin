@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class GovNoticeService {
@@ -19,5 +21,10 @@ public class GovNoticeService {
     public void createGovNotice(GovNotice govNotice, Member member) {
         govNoticeRepository.save(govNotice);
         govNotice.setMember(member);
+    }
+
+    @Transactional
+    public List<GovNotice> getGovNoticeList() {
+        return govNoticeRepository.findAll();
     }
 }

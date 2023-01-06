@@ -1,6 +1,7 @@
 package com.example.monthleradmin.modules.member.domain;
 
 import com.example.monthleradmin.common.entity.BaseTimeEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,7 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private VendorType vendor;  // 가입 방법 구분
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime retiredDt; // 탈퇴 일자
 
 //    @OneToMany(mappedBy = "member")

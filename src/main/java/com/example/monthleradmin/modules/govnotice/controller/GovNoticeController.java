@@ -1,7 +1,6 @@
 package com.example.monthleradmin.modules.govnotice.controller;
 
 import com.example.monthleradmin.modules.govnotice.domain.GovNotice;
-import com.example.monthleradmin.modules.govnotice.dto.GovNoticeRequestDto;
 import com.example.monthleradmin.modules.govnotice.form.GovNoticeForm;
 import com.example.monthleradmin.modules.govnotice.service.GovNoticeService;
 import com.example.monthleradmin.modules.member.domain.Member;
@@ -12,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -27,7 +25,8 @@ public class GovNoticeController {
     private final ModelMapper modelMapper;
 
     @GetMapping("/gov-notice")
-    public String govNoticeListView() {
+    public String govNoticeListView(Model model) {
+        model.addAttribute("govNoticeList", govNoticeService.getGovNoticeList());
         return "pages/gov-notice/list";
     }
 
@@ -47,6 +46,12 @@ public class GovNoticeController {
         govNoticeService.createGovNotice(modelMapper.map(govNoticeForm, GovNotice.class), member);
         return "redirect:/gov-notice";
     }
+
+//    @GetMapping("/gov-notice/{govNoticeId}/edit")
+//    public String updateGovNoticeForm(@PathVariable String path, @PathVariable("govNoticeId") GovNotice govNotice, Model model) {
+//        model.addAttribute("govNoticeList", govNoticeService.getGovNoticeList());
+//        return "pages/gov-notice/edit";
+//    }
 
 //    @PostMapping(value = "/api/gov-notice")
 //    public ResponseEntity<?> createGovNotice(@RequestBody GovNoticeRequestDto dto) {
