@@ -34,6 +34,6 @@ public class GovNoticeService {
 
     @Transactional
     public void deleteByGovNoticeId(Long govNoticeId) {
-
+        govNoticeRepository.deleteById(govNoticeId);
     }
 }

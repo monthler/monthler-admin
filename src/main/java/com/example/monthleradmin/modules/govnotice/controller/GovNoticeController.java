@@ -86,9 +86,9 @@ public class GovNoticeController {
     }
 
     @DeleteMapping("/gov-notice/{govNoticeId}")
-    public void deleteGovNotice(@PathVariable Long govNoticeId){
-        // 삭제 기능 마저 구현 하기 gss
+    public String deleteGovNotice(@PathVariable Long govNoticeId){
         govNoticeService.deleteByGovNoticeId(govNoticeId);
+        return "redirect:/gov-notice";
     }
 
 

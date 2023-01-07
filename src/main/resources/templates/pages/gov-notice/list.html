@@ -17,6 +17,26 @@
 
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
+
+    <script>
+        function govNoticeDel(me) {
+            console.log(me.getAttribute('data-gov-notice-id'));
+            let govNoticeId = me.getAttribute('data-gov-notice-id');
+            $('#modalDelBtn')[0].setAttribute('data-gov-notice-id', govNoticeId);
+            $('#govNoticeDeleteModal').find('form').attr('action', '/gov-notice/'+govNoticeId);
+            //$('#govNoticeDeleteModal').find('form').attr('method', 'delete');
+
+            $('#govNoticeDeleteModal').modal('show');
+        }
+        function realGovNoticeDel(me) {
+            console.log(me.getAttribute('data-gov-notice-id'));
+        }
+        // $('#govNoticeDel').click(function(me){
+        //     console.log('삭제 클릭');
+        //
+        //     $('#modalDelBtn').setAttribute('data-gov-notice-id', '')
+        // });
+    </script>
 </th:block>
 
 <!-- Content -->
@@ -59,14 +79,15 @@
                         <td th:text="${gov.releaseDt}">2023-01-10</td>
                         <td th:text="${gov.supportFund}">10000</td>
                         <td>
-                            <a th:href="@{/gov-notice/del}" class="btn btn-danger btn-icon-split btn-sm">
-                                <span class="text">삭제</span>
-                            </a>
-                            <!-- 타임리프 에러발생으로 일단 제외 처리함
-                            <form th:action="@{'/study/' + ${study.path} + '/events/' + ${event.id}}" th:method="delete">
-                                <button class="btn btn-danger btn-icon-split btn-sm" type="submit" aria-describedby="submitHelp">삭제</button>
+<!--                            <a th:href="@{/gov-notice/del}" class="btn btn-danger btn-icon-split btn-sm">-->
+<!--                                <span class="text">삭제</span>-->
+<!--                            </a>-->
+                            <form th:action="@{'/gov-notice/'+${gov.govNoticeId}}" th:method="delete">
+                                <button class="btn btn-danger btn-sm">삭제</button>
                             </form>
-                            -->
+
+                                <!-- Button trigger modal -->
+<!--                                <button type="button" class="btn btn-danger btn-sm p-2" id="govNoticeDel" th:data-gov-notice-id="${gov.govNoticeId}" onclick="govNoticeDel(this)">삭제</button>-->
                         </td>
                     </tr>
                     </tbody>
@@ -74,5 +95,31 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <!--
+    <div class="modal fade" id="govNoticeDeleteModal" tabindex="-1" aria-labelledby="govNoticeDeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="govNoticeDeleteModalLabel">확인</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    정말 삭제하시겠습니까?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+                    <form method="delete">
+                        <button type="submit" class="btn btn-danger" id="modalDelBtn" data-dismiss="modal">삭제</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    -->
+
 </div>
 </html>
