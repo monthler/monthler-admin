@@ -62,7 +62,7 @@ public class GovNotice extends BaseTimeEntity {
     private String email;
     private String phoneNumber;
     private String noticeLink; // 모집공고 링크
-    private String refFile; // 관련 파일 id
+    private String refFileUrl; // 관련 파일 id
 
     private String mainDesc; // 메인 설명
 

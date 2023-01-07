@@ -23,57 +23,256 @@
 <div layout:fragment="content" class="container-fluid">
 
     <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">지자체 공고 목록</h1>
-    <p class="mb-4">지자체 공고 목록 페이지 입니다.</p>
+    <h1 class="h3 mb-2 text-gray-800">지자체 공고 상세</h1>
+    <p class="mb-4">지자체 공고 상세 페이지 입니다.</p>
 
-    <!-- DataTales Example -->
-    <div class="card shadow mb-4">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
-            <h6 class="m-0 font-weight-bold text-primary">지자체 공고 목록</h6>
-            <a th:href="@{/gov-notice/add}" class="btn btn-primary btn-icon-split btn-md">
-                <span class="text">등록</span>
-            </a>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>제목</th>
-                        <th>지역</th>
-                        <th>도시</th>
-                        <th>모집기간</th>
-                        <th>선정발표일</th>
-                        <th>총 지원금</th>
-                        <th>관리</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="gov: ${govNotice}">
-                        <td th:text="${gov.govNoticeId}">1</td>
-                        <td><a th:href="@{'/gov-notice/edit/' + ${gov.govNoticeId}}"><span th:text="${gov.title}">지자체 공고 제목</span></a></td>
-                        <td th:text="${gov.region}">그외</td>
-                        <td th:text="${gov.city}">인천</td>
-                        <td><span th:text="${gov.recruitmentStDt}">2023-01-03</span> ~ <span th:text="${gov.recruitmentEdDt}">2023-01-07</span></td>
-                        <td th:text="${gov.releaseDt}">2023-01-10</td>
-                        <td th:text="${gov.supportFund}">10000</td>
-                        <td>
-                            <a th:href="@{/gov-notice/del}" class="btn btn-danger btn-icon-split btn-sm">
-                                <span class="text">삭제</span>
-                            </a>
-                            <!-- 타임리프 에러발생으로 일단 제외 처리함
-                            <form th:action="@{'/study/' + ${study.path} + '/events/' + ${event.id}}" th:method="delete">
-                                <button class="btn btn-danger btn-icon-split btn-sm" type="submit" aria-describedby="submitHelp">삭제</button>
-                            </form>
-                            -->
-                        </td>
-                    </tr>
-
-                    </tbody>
-                </table>
+    <!-- Content -->
+    <div>
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">제목</label>
+            <div class="col-sm-5">
+                <span th:text="${govNotice.title}"></span>
             </div>
         </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">지역</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.region}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">도시</label>
+            <div class="col-sm-2">
+                <span th:text="${govNotice.city}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">카테고리</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.themeList}"></span>
+<!--                <div class="form-check form-check-inline">-->
+<!--                    <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck1" value="여행">-->
+<!--                    <label class="form-check-label" for="govNoticeThemeCheck1">여행</label>-->
+<!--                </div>-->
+<!--                <div class="form-check form-check-inline">-->
+<!--                    <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck2" value="워케이션">-->
+<!--                    <label class="form-check-label" for="govNoticeThemeCheck2">워케이션</label>-->
+<!--                </div>-->
+<!--                <div class="form-check form-check-inline">-->
+<!--                    <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck3" value="프로젝트">-->
+<!--                    <label class="form-check-label" for="govNoticeThemeCheck3">프로젝트</label>-->
+<!--                </div>-->
+<!--                <div class="form-check form-check-inline">-->
+<!--                    <input class="form-check-input" th:field="*{themeList}" type="checkbox" id="govNoticeThemeCheck4" value="귀농귀촌">-->
+<!--                    <label class="form-check-label" for="govNoticeThemeCheck4">귀농귀촌</label>-->
+<!--                </div>-->
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">체류기간</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.stayStDt}"></span> ~ <span th:text="${govNotice.stayEdDt}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">미션 박수</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.minNight}"></span> ~ <span th:text="${govNotice.maxNight}"></span>
+            </div>
+<!--            <div class="col-sm-10 d-flex align-items-center">-->
+<!--                <input type="number" th:field="*{minNight}" class="form-control" style="width:90px;" id="minNight" placeholder="최소">-->
+<!--                <span class="mx-1">~</span>-->
+<!--                <input type="number" th:field="*{maxNight}" class="form-control" style="width:90px;" id="maxNight" placeholder="최대">-->
+<!--                <span class="mx-1">박</span>-->
+<!--            </div>-->
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">모집 인원</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.recruitmentTeam}"></span>팀 <span th:text="${govNotice.minPeople}"></span> ~ <span th:text="${govNotice.maxPeople}"></span>
+            </div>
+<!--            <div class="col-sm-10 d-flex align-items-center">-->
+<!--                <input type="number" th:field="*{recruitmentTeam}" class="form-control" style="width:90px;" id="recruitmentTeam">-->
+<!--                <span class="ml-1 mr-3">팀</span>-->
+<!--                <input type="number" th:field="*{minPeople}" class="form-control" style="width:90px;" id="minPeople">-->
+<!--                <span class="mx-1">~</span>-->
+<!--                <input type="number" th:field="*{maxPeople}" class="form-control" style="width:90px;" id="maxPeople">-->
+<!--                <span class="mx-1">명</span>-->
+<!--            </div>-->
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">총 지원금</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.supportFund}"></span>
+            </div>
+<!--            <div class="col-sm-10 d-flex align-items-center">-->
+<!--                <input type="number" th:field="*{supportFund}" class="form-control" style="width:90px;" id="supportFund">-->
+<!--                <span class="ml-1">원</span>-->
+<!--            </div>-->
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">모집 기간</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.recruitmentStDt}"></span> ~ <span th:text="${govNotice.recruitmentEdDt}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">선정 발표</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.releaseDt}"></span>
+<!--                <div class="row">-->
+<!--                    <div class="col-md-12">-->
+<!--                        <div class="row">-->
+<!--                            <div class="col-md-2">-->
+<!--                                <div class="form-group">-->
+<!--                                    <label for="releaseDt">선정 발표일</label>-->
+<!--                                    <input type="text" th:field="*{releaseDt}" class="form-control" id="releaseDt" placeholder="YYYY-MM-DD">-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">아이동반<br>지원여부</label>
+            <div class="col-sm-10">
+                <span th:text="${govNotice.withChildYn}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">이메일</label>
+            <div class="col-sm-3">
+                <span th:text="${govNotice.email}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">전화</label>
+            <div class="col-sm-3">
+                <span th:text="${govNotice.phoneNumber}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">관련파일</label>
+            <div class="col-sm-3">
+                <span th:text="${govNotice.refFileUrl}"></span>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <label class="col-sm-1 col-form-label">모집공고</label>
+            <div class="col-sm-3">
+                <span th:text="${govNotice.noticeLink}"></span>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="mb-3">
+            <label for="mainDesc" class="form-label">메인 설명</label>
+            <div class="col-sm-5">
+                <textarea class="form-control" id="mainDesc" rows="3" disabled th:text="${govNotice.mainDesc}">
+                </textarea>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label for="detailDesc" class="form-label">상세 설명</label>
+            <div class="col-sm-5">
+                <textarea class="form-control" id="detailDesc" rows="5" placeholder="editor" disabled th:text="${govNotice.detailDesc}"></textarea>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="mb-3">
+            <label for="mainDesc" class="form-label">사진 첨부</label>
+            <div class="col-sm-3 mb-1">
+                <input class="form-control" type="text" id="detailImgUrl1" placeholder="상세 이미지 URL">
+            </div>
+            <div class="col-sm-3 mb-1">
+                <input type="text" class="form-control" id="imgDescWrite1" placeholder="이미지 설명 직접 작성">
+            </div>
+            <div class="ml-3">
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-1">
+                    <label class="form-check-label" for="imgDescRadio1-1">
+                        대표 썸네일 (리스트, 상세페이지 상단에 노출)
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-2" checked>
+                    <label class="form-check-label" for="imgDescRadio1-2">
+                        공고문 (공고문 내용)
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-3">
+                    <label class="form-check-label" for="imgDescRadio1-3">
+                        미션보기 (미션만 캡쳐)
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-4">
+                    <label class="form-check-label" for="imgDescRadio1-4">
+                        선정기준 (선정기준만 캡쳐)
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-5">
+                    <label class="form-check-label" for="imgDescRadio1-5">
+                        지원내용 (지원내용만 캡쳐)
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-6">
+                    <label class="form-check-label" for="imgDescRadio1-6">
+                        프로그램 (일정표)
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-7">
+                    <label class="form-check-label" for="imgDescRadio1-7">
+                        프로그램 분위기
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-8">
+                    <label class="form-check-label" for="imgDescRadio1-8">
+                        숙소
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-9">
+                    <label class="form-check-label" for="imgDescRadio1-9">
+                        코워킹스페이스
+                    </label>
+                </div>
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="imgDescRadio1" id="imgDescRadio1-10">
+                    <label class="form-check-label" for="imgDescRadio1-10">
+                        체험프로그램
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-5">등록</button>
     </div>
 </div>
 </html>

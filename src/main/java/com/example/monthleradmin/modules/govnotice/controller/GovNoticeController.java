@@ -33,20 +33,26 @@ public class GovNoticeController {
     }
 
     // gov-notice 상세조회 (여기서 edit)
-    @ResponseBody
+//    @ResponseBody
+//    @GetMapping("/gov-notice/{govNoticeId}")
+//    public String retrieveGovNotice(@PathVariable Long govNoticeId, Model model){
+//        Optional<GovNotice> govNotice = govNoticeService.getGovNotice(govNoticeId);
+//
+//        // 에러 핸들링
+//        if(!govNotice.isPresent()){
+//            throw new GovNoticeNotFoundException(String.format("상세조회하신 [%s] 가 존재하지 않습니다", govNoticeId));
+//        }
+//
+//        // 추후 헤테오스 추가 적용??
+//
+//        // 임시 테스트용 페이지 list.html 복붙 - 한개공고만 뜸
+//        model.addAttribute("govNotice", govNotice.get());
+//        return "pages/gov-notice/detail";
+//    }
+
     @GetMapping("/gov-notice/{govNoticeId}")
-    public String retrieveGovNotice(@PathVariable Long govNoticeId, Model model){
-        Optional<GovNotice> govNotice = govNoticeService.getGovNotice(govNoticeId);
-
-        // 에러 핸들링
-        if(!govNotice.isPresent()){
-            throw new GovNoticeNotFoundException(String.format("상세조회하신 [%s] 가 존재하지 않습니다", govNoticeId));
-        }
-
-        // 추후 헤테오스 추가 적용??
-        
-        // 임시 테스트용 페이지 list.html 복붙 - 한개공고만 뜸
-        model.addAttribute("govNotice", govNotice.get());
+    public String govNoticeDetail(@PathVariable Long govNoticeId, Model model){
+        model.addAttribute("govNotice", govNoticeService.getGovNotice(govNoticeId).get());
         return "pages/gov-notice/detail";
     }
 
