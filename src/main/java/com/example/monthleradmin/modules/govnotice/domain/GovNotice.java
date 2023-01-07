@@ -3,6 +3,7 @@ package com.example.monthleradmin.modules.govnotice.domain;
 import com.example.monthleradmin.common.entity.BaseTimeEntity;
 import com.example.monthleradmin.modules.govnotice.dto.GovNoticeRequestDto;
 import com.example.monthleradmin.modules.member.domain.Member;
+import com.example.monthleradmin.modules.theme.domain.Theme;
 import lombok.*;
 
 import javax.persistence.*;
@@ -31,8 +32,9 @@ public class GovNotice extends BaseTimeEntity {
 //    @OneToMany(mappedBy = "applicantId")
 //    private List<Applicant> applicants = new ArrayList<>();
 //
-    // @OneToMany(mappedBy = "themeId")
-    // private List<String> themeList = new ArrayList<>();
+    @OneToMany(mappedBy = "themeId")
+    private List<Theme> themeList = new ArrayList<>();
+
 
     private String title;
     private String region;

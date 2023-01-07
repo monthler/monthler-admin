@@ -50,9 +50,9 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="gov: ${govNoticeList}">
+                    <tr th:each="gov: ${govNotice}">
                         <td th:text="${gov.govNoticeId}">1</td>
-                        <td><a th:href="@{'/gov-notice/detail/' + ${gov.govNoticeId}}"><span th:text="${gov.title}">지자체 공고 제목</span></a></td>
+                        <td><a th:href="@{'/gov-notice/edit/' + ${gov.govNoticeId}}"><span th:text="${gov.title}">지자체 공고 제목</span></a></td>
                         <td th:text="${gov.region}">그외</td>
                         <td th:text="${gov.city}">인천</td>
                         <td><span th:text="${gov.recruitmentStDt}">2023-01-03</span> ~ <span th:text="${gov.recruitmentEdDt}">2023-01-07</span></td>
@@ -69,6 +69,7 @@
                             -->
                         </td>
                     </tr>
+
                     </tbody>
                 </table>
             </div>

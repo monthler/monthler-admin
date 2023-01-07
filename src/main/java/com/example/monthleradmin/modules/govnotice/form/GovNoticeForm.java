@@ -4,14 +4,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 public class GovNoticeForm {
 
+    @NotBlank(message = "제목은 필수값 입니다")
     private String title;
+    @NotBlank(message = "지역은 필수값 입니다")
     private String region;
+    @NotBlank(message = "도시는 필수값 입니다")
     private String city;
     private List<String> themeList;
 
