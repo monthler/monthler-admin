@@ -29,22 +29,11 @@ public class GovNoticeService {
     }
 
     @Transactional
-    public void createGovNotice(GovNotice govNotice, Member member) {
-        govNotice.setMember(member);
-        System.out.println(govNotice.getGovNoticeId());
-        govNoticeRepository.save(govNotice);
-        System.out.println(govNotice.getGovNoticeId());
-    }
-
-    @Transactional
     public void createGovNotice(GovNoticeForm govNoticeForm, Member member) {
         GovNotice govNotice = modelMapper.map(govNoticeForm, GovNotice.class);
         govNotice.setMember(member);
         govNotice.settingThemeList(govNoticeForm.getThemeStringList(), categoryRepository.findAll());
-
-        System.out.println(govNotice.getGovNoticeId());
         govNoticeRepository.save(govNotice);
-        System.out.println(govNotice.getGovNoticeId());
     }
 
     @Transactional

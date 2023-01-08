@@ -68,14 +68,7 @@ public class GovNoticeController {
             return "pages/gov-notice/add";
         }
 
-//        List<String> list = govNoticeForm.getThemeList();
-//        for(String theme : list){
-//            System.out.println("카테고리 테스트 " + theme);
-//        }
-
         Member member = memberService.getMember(1L); // TODO: Security 적용 시 코드 변경
-        // String을 해당하는 categoryID 리스트를 가져옴
-        categoryService.getThemeList(govNoticeForm);
         govNoticeService.createGovNotice(govNoticeForm, member);
 
         // HTTP Status Code제어 - RestContoller 에서는 이걸로 반환하는데 뷰에다가 이 정도를 어떻게 추가하지...?

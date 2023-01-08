@@ -17,31 +17,4 @@ import java.util.Optional;
 public class CategoryService {
     private final CategoryRepository categoryRepository;
 
-    @Transactional
-    public List<Long> getCategoryIdList(List<String> themeList){
-        List<Long> categoryIdList = new ArrayList<>();
-        List<Category> categoryList = categoryRepository.findAll();
-        for(int i=0; i<categoryList.size(); i++){
-            if(themeList.contains(categoryList.get(i).getSubject())){
-                // System.out.println("테마명 = " + categoryList.get(i).getSubject() + " categoryID = " + categoryList.get(i).getCategoryId());
-                categoryIdList.add(categoryList.get(i).getCategoryId());
-            }
-        }
-        return categoryIdList;
-    }
-
-    @Transactional
-    public void getThemeList(GovNoticeForm govNoticeForm){
-        List<Category> categoryList = categoryRepository.findAll();
-
-        for(int i=0; i<categoryList.size(); i++){
-            if(govNoticeForm.getThemeStringList().contains(categoryList.get(i).getSubject())){
-                System.out.println("테마명 = " + categoryList.get(i).getSubject() + " categoryID = " + categoryList.get(i).getCategoryId());
-                Theme theme = new Theme();
-                theme.addCategory(categoryList.get(i));
-                govNoticeForm.getThemeList().add(theme);
-            }
-        }
-    }
-
 }
