@@ -39,7 +39,7 @@ public class CategoryService {
                 System.out.println("테마명 = " + categoryList.get(i).getSubject() + " categoryID = " + categoryList.get(i).getCategoryId());
                 Theme theme = new Theme();
                 theme.addCategory(categoryList.get(i));
-                govNoticeForm.getThemeList().add(new Theme());
+                govNoticeForm.getThemeList().add(theme);
             }
         }
     }
