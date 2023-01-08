@@ -1,7 +1,7 @@
 package com.example.monthleradmin.modules.govnotice.domain;
 
 import com.example.monthleradmin.common.entity.BaseTimeEntity;
-import com.example.monthleradmin.modules.govnotice.dto.GovNoticeRequestDto;
+import com.example.monthleradmin.modules.category.domain.Category;
 import com.example.monthleradmin.modules.member.domain.Member;
 import com.example.monthleradmin.modules.theme.domain.Theme;
 import lombok.*;
@@ -10,6 +10,8 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+
+import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter
@@ -25,14 +27,14 @@ public class GovNotice extends BaseTimeEntity {
 //    @JoinColumn(name = "adminId")
 //    private Admin admin;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
 //    @OneToMany(mappedBy = "applicantId")
 //    private List<Applicant> applicants = new ArrayList<>();
 //
-    @OneToMany(mappedBy = "themeId")
+    @OneToMany(mappedBy = "themeId", cascade = CascadeType.ALL)
     private List<Theme> themeList = new ArrayList<>();
 
 
@@ -69,4 +71,15 @@ public class GovNotice extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String detailDesc; // 상세 설명
 
+    public void settingThemeList(List<String> themeStringList, List<Category> categoryList) {
+        for(int i=0; i<categoryList.size(); i++){
+            if(themeStringList.contains(categoryList.get(i).getSubject())){
+                Theme theme = Theme.builder()
+                                    .notice(this)
+                                    .category(categoryList.get(i))
+                                    .build();
+                this.themeList.add(theme);
+            }
+        }
+    }
 }
