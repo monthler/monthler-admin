@@ -1,6 +1,7 @@
 package com.example.monthleradmin.modules.govnotice.domain;
 
 import com.example.monthleradmin.common.entity.BaseTimeEntity;
+import com.example.monthleradmin.modules.category.domain.Category;
 import com.example.monthleradmin.modules.govnotice.dto.GovNoticeRequestDto;
 import com.example.monthleradmin.modules.member.domain.Member;
 import com.example.monthleradmin.modules.theme.domain.Theme;
@@ -71,4 +72,13 @@ public class GovNotice extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String detailDesc; // 상세 설명
 
+    public void settingThemeList(List<String> themeStringList, List<Category> categoryList) {
+        for(int i=0; i<categoryList.size(); i++){
+            if(themeStringList.contains(categoryList.get(i).getSubject())){
+                System.out.println("테마명 = " + categoryList.get(i).getSubject() + " categoryID = " + categoryList.get(i).getCategoryId());
+                Theme theme = new Theme(this, categoryList.get(i));
+                this.themeList.add(theme);
+            }
+        }
+    }
 }

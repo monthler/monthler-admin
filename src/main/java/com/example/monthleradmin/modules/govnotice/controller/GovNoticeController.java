@@ -76,7 +76,7 @@ public class GovNoticeController {
         Member member = memberService.getMember(1L); // TODO: Security 적용 시 코드 변경
         // String을 해당하는 categoryID 리스트를 가져옴
         categoryService.getThemeList(govNoticeForm);
-        govNoticeService.createGovNotice(modelMapper.map(govNoticeForm, GovNotice.class), member);
+        govNoticeService.createGovNotice(govNoticeForm, member);
 
         // HTTP Status Code제어 - RestContoller 에서는 이걸로 반환하는데 뷰에다가 이 정도를 어떻게 추가하지...?
         /*URI location = ServletUriComponentsBuilder.fromCurrentRequest() // 현재경로
