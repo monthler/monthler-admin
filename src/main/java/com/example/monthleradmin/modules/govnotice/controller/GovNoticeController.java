@@ -35,24 +35,6 @@ public class GovNoticeController {
         return "pages/gov-notice/list";
     }
 
-    // gov-notice 상세조회 (여기서 edit)
-//    @ResponseBody
-//    @GetMapping("/gov-notice/{govNoticeId}")
-//    public String retrieveGovNotice(@PathVariable Long govNoticeId, Model model){
-//        Optional<GovNotice> govNotice = govNoticeService.getGovNotice(govNoticeId);
-//
-//        // 에러 핸들링
-//        if(!govNotice.isPresent()){
-//            throw new GovNoticeNotFoundException(String.format("상세조회하신 [%s] 가 존재하지 않습니다", govNoticeId));
-//        }
-//
-//        // 추후 헤테오스 추가 적용??
-//
-//        // 임시 테스트용 페이지 list.html 복붙 - 한개공고만 뜸
-//        model.addAttribute("govNotice", govNotice.get());
-//        return "pages/gov-notice/detail";
-//    }
-
     @GetMapping("/gov-notice/{govNoticeId}")
     public String govNoticeDetail(@PathVariable Long govNoticeId, Model model){
         model.addAttribute("govNotice", govNoticeService.getGovNotice(govNoticeId).get());
@@ -92,20 +74,12 @@ public class GovNoticeController {
         return "redirect:/gov-notice";
     }
 
+    @GetMapping("/gov-notice/{govNoticeId}/edit")
+    public String editGovNoticeForm(@PathVariable Long govNoticeId, Model model){
+        govNoticeService.getGovNoticeForm(govNoticeId);
+        return "pages/gov-notice/edit";
+    }
 
 
-//    @PostMapping(value = "/api/gov-notice")
-//    public ResponseEntity<?> createGovNotice(@RequestBody GovNoticeRequestDto dto) {
-//        // TODO: Member Spring Security 로 붙여야 함
-//        govNoticeService.createGovNotice(dto);
-//
-//        // result
-//        // TODO: 응답 처리 구조 생성 필요
-//        HashMap<String,Object> result = new HashMap<>();
-//        result.put("message", "정부공고 등록 완료.");
-//        result.put("code", "00"); // success
-//
-//        return ResponseEntity.ok(result);
-//    }
 
 }

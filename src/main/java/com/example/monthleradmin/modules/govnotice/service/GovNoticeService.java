@@ -25,7 +25,17 @@ public class GovNoticeService {
 
     @Transactional
     public Optional<GovNotice> getGovNotice(Long govNoticeId){
-        return govNoticeRepository.findById(govNoticeId);
+        Optional<GovNotice> govNotice = govNoticeRepository.findById(govNoticeId);
+        return govNotice;
+    }
+
+    @Transactional
+    public GovNoticeForm getGovNoticeForm(Long govNoticeId){
+        GovNotice govNotice = govNoticeRepository.findById(govNoticeId).get();
+        System.out.println(govNotice);
+        GovNoticeForm govNoticeForm = modelMapper.map(govNotice, GovNoticeForm.class);
+//        govNoticeForm.settingThemeStringList();
+        return govNoticeForm;
     }
 
     @Transactional

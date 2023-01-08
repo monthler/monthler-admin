@@ -16,7 +16,6 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class GovNotice extends BaseTimeEntity {
     @Id
@@ -28,13 +27,13 @@ public class GovNotice extends BaseTimeEntity {
 //    private Admin admin;
 
     @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "memberId")
     private Member member;
 
 //    @OneToMany(mappedBy = "applicantId")
 //    private List<Applicant> applicants = new ArrayList<>();
 //
-    @OneToMany(mappedBy = "themeId", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "notice", cascade = CascadeType.ALL)
     private List<Theme> themeList = new ArrayList<>();
 
 

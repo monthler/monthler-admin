@@ -78,10 +78,13 @@
                         <td><span th:text="${gov.recruitmentStDt}">2023-01-03</span> ~ <span th:text="${gov.recruitmentEdDt}">2023-01-07</span></td>
                         <td th:text="${gov.releaseDt}">2023-01-10</td>
                         <td th:text="${gov.supportFund}">10000</td>
-                        <td>
+₩₩                        <td class="d-flex">
 <!--                            <a th:href="@{/gov-notice/del}" class="btn btn-danger btn-icon-split btn-sm">-->
 <!--                                <span class="text">삭제</span>-->
 <!--                            </a>-->
+                            <form th:action="@{'/gov-notice/'+${gov.govNoticeId}+'/edit'}" th:method="get" class="mr-2">
+                                <button class="btn btn-warning btn-sm">수정</button>
+                            </form>
                             <form th:action="@{'/gov-notice/'+${gov.govNoticeId}}" th:method="delete">
                                 <button class="btn btn-danger btn-sm">삭제</button>
                             </form>

@@ -13,10 +13,8 @@ import java.util.List;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long categoryId;
 
     private String subject;
-
-    @OneToMany(mappedBy = "category")
-    List<Theme> themeList = new ArrayList<>();
 }

@@ -1,5 +1,7 @@
 package com.example.monthleradmin.modules.govnotice.form;
 
+import com.example.monthleradmin.modules.category.domain.Category;
+import com.example.monthleradmin.modules.member.domain.Member;
 import com.example.monthleradmin.modules.theme.domain.Theme;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -21,7 +23,6 @@ public class GovNoticeForm {
     @NotBlank(message = "도시는 필수값 입니다")
     private String city;
     private List<String> themeStringList;
-    private List<Theme> themeList = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -54,5 +55,13 @@ public class GovNoticeForm {
     private String refFileUrl; // 관련 파일 Url (파일 주소 수동 입력)
     private String mainDesc; // 메인 설명
     private String detailDesc; // 상세 설명
+
+    public void settingThemeStringList(List<Theme> themeList, List<Category> categoryList) {
+        for(int i=0; i<categoryList.size(); i++){
+            if(themeList.contains(categoryList.get(i).getSubject())){
+                this.themeStringList.add(categoryList.get(i).getSubject());
+            }
+        }
+    }
 
 }
