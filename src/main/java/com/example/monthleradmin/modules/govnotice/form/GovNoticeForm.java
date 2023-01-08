@@ -22,7 +22,7 @@ public class GovNoticeForm {
     private String region;
     @NotBlank(message = "도시는 필수값 입니다")
     private String city;
-    private List<String> themeStringList;
+    private List<String> themeStringList = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -57,10 +57,8 @@ public class GovNoticeForm {
     private String detailDesc; // 상세 설명
 
     public void settingThemeStringList(List<Theme> themeList, List<Category> categoryList) {
-        for(int i=0; i<categoryList.size(); i++){
-            if(themeList.contains(categoryList.get(i).getSubject())){
-                this.themeStringList.add(categoryList.get(i).getSubject());
-            }
+        for(int i=0; i<themeList.size(); i++) {
+            this.themeStringList.add(themeList.get(i).getCategory().getSubject());
         }
     }
 

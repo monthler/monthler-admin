@@ -34,7 +34,7 @@ public class GovNoticeService {
         GovNotice govNotice = govNoticeRepository.findById(govNoticeId).get();
         System.out.println(govNotice);
         GovNoticeForm govNoticeForm = modelMapper.map(govNotice, GovNoticeForm.class);
-//        govNoticeForm.settingThemeStringList();
+        govNoticeForm.settingThemeStringList(govNotice.getThemeList(), categoryRepository.findAll());
         return govNoticeForm;
     }
 

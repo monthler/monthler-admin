@@ -76,7 +76,7 @@ public class GovNoticeController {
 
     @GetMapping("/gov-notice/{govNoticeId}/edit")
     public String editGovNoticeForm(@PathVariable Long govNoticeId, Model model){
-        govNoticeService.getGovNoticeForm(govNoticeId);
+        model.addAttribute(govNoticeService.getGovNoticeForm(govNoticeId));
         return "pages/gov-notice/edit";
     }
 
