@@ -11,6 +11,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import static javax.persistence.FetchType.LAZY;
+
 @Entity
 @Getter
 @Setter
@@ -25,14 +27,14 @@ public class GovNotice extends BaseTimeEntity {
 //    @JoinColumn(name = "adminId")
 //    private Admin admin;
 
-    @ManyToOne
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
 
 //    @OneToMany(mappedBy = "applicantId")
 //    private List<Applicant> applicants = new ArrayList<>();
 //
-    @OneToMany(mappedBy = "themeId")
+    @OneToMany(mappedBy = "themeId", cascade = CascadeType.ALL)
     private List<Theme> themeList = new ArrayList<>();
 
 

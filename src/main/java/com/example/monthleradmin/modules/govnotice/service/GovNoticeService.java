@@ -23,8 +23,10 @@ public class GovNoticeService {
 
     @Transactional
     public void createGovNotice(GovNotice govNotice, Member member) {
-        govNoticeRepository.save(govNotice);
         govNotice.setMember(member);
+        System.out.println(govNotice.getGovNoticeId());
+        govNoticeRepository.save(govNotice);
+        System.out.println(govNotice.getGovNoticeId());
     }
 
     @Transactional

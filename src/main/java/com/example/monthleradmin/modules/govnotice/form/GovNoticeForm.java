@@ -1,11 +1,14 @@
 package com.example.monthleradmin.modules.govnotice.form;
 
+import com.example.monthleradmin.modules.theme.domain.Theme;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
+import java.lang.management.ThreadMXBean;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -17,7 +20,8 @@ public class GovNoticeForm {
     private String region;
     @NotBlank(message = "도시는 필수값 입니다")
     private String city;
-    private List<String> themeList;
+    private List<String> themeStringList;
+    private List<Theme> themeList = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
