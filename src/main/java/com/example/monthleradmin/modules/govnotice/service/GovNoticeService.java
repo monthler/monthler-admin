@@ -34,15 +34,15 @@ public class GovNoticeService {
         GovNotice govNotice = govNoticeRepository.findById(govNoticeId).get();
         System.out.println(govNotice);
         GovNoticeForm govNoticeForm = modelMapper.map(govNotice, GovNoticeForm.class);
-        govNoticeForm.settingThemeStringList(govNotice.getThemeList(), categoryRepository.findAll());
+        govNoticeForm.settingThemeList(govNotice.getThemeList());
         return govNoticeForm;
     }
 
     @Transactional
-    public void createGovNotice(GovNoticeForm govNoticeForm, Member member) {
+    public void updateGovNotice(GovNoticeForm govNoticeForm, Member member) {
         GovNotice govNotice = modelMapper.map(govNoticeForm, GovNotice.class);
         govNotice.setMember(member);
-        govNotice.settingThemeList(govNoticeForm.getThemeStringList(), categoryRepository.findAll());
+        govNotice.settingThemeList(govNoticeForm.getThemeList(), categoryRepository.findAll());
         govNoticeRepository.save(govNotice);
     }
 

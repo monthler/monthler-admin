@@ -70,9 +70,9 @@ public class GovNotice extends BaseTimeEntity {
     @Column(columnDefinition = "TEXT")
     private String detailDesc; // 상세 설명
 
-    public void settingThemeList(List<String> themeStringList, List<Category> categoryList) {
+    public void settingThemeList(List<String> themeList, List<Category> categoryList) {
         for(int i=0; i<categoryList.size(); i++){
-            if(themeStringList.contains(categoryList.get(i).getSubject())){
+            if(themeList.contains(categoryList.get(i).getSubject())){
                 Theme theme = Theme.builder()
                                     .notice(this)
                                     .category(categoryList.get(i))

@@ -57,7 +57,7 @@ public class GovNoticeController {
         }
 
         Member member = memberService.getMember(1L); // TODO: Security 적용 시 코드 변경
-        govNoticeService.createGovNotice(govNoticeForm, member);
+        govNoticeService.updateGovNotice(govNoticeForm, member);
 
         // HTTP Status Code제어 - RestContoller 에서는 이걸로 반환하는데 뷰에다가 이 정도를 어떻게 추가하지...?
         /*URI location = ServletUriComponentsBuilder.fromCurrentRequest() // 현재경로
@@ -80,6 +80,12 @@ public class GovNoticeController {
         return "pages/gov-notice/edit";
     }
 
+    @PostMapping("/gov-notice/{govNoticeId}/edit")
+    public String editGovNoticeForm(@PathVariable Long govNoticeId, @Valid GovNoticeForm govNoticeForm){
+        Member member = memberService.getMember(1L); // TODO: Security 적용 시 코드 변경
+        govNoticeService.updateGovNotice(govNoticeForm, member);
+        return "redirect:/gov-notice/" + govNoticeId;
+    }
 
 
 }

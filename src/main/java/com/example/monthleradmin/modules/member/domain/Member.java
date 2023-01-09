@@ -2,6 +2,7 @@ package com.example.monthleradmin.modules.member.domain;
 
 import com.example.monthleradmin.common.entity.BaseTimeEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Member extends BaseTimeEntity {
     private String email;
 
     @Column(nullable = false)
+    @JsonIgnore
     private Integer password;
 
     @Column(nullable = false)

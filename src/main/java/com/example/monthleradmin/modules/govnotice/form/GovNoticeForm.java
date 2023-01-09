@@ -16,13 +16,15 @@ import java.util.List;
 @Data
 public class GovNoticeForm {
 
+    private Long govNoticeId;
+
     @NotBlank(message = "제목은 필수값 입니다")
     private String title;
     @NotBlank(message = "지역은 필수값 입니다")
     private String region;
     @NotBlank(message = "도시는 필수값 입니다")
     private String city;
-    private List<String> themeStringList = new ArrayList<>();
+    private List<String> themeList = new ArrayList<>();
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -56,9 +58,9 @@ public class GovNoticeForm {
     private String mainDesc; // 메인 설명
     private String detailDesc; // 상세 설명
 
-    public void settingThemeStringList(List<Theme> themeList, List<Category> categoryList) {
+    public void settingThemeList(List<Theme> themeList) {
         for(int i=0; i<themeList.size(); i++) {
-            this.themeStringList.add(themeList.get(i).getCategory().getSubject());
+            this.themeList.add(themeList.get(i).getCategory().getSubject());
         }
     }
 
