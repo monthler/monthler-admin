@@ -1,6 +1,7 @@
 package com.example.monthleradmin.modules.govnotice.form;
 
 import com.example.monthleradmin.modules.category.domain.Category;
+import com.example.monthleradmin.modules.govnotice.domain.GovNotice;
 import com.example.monthleradmin.modules.member.domain.Member;
 import com.example.monthleradmin.modules.theme.domain.Theme;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -59,9 +60,12 @@ public class GovNoticeForm {
     private String detailDesc; // 상세 설명
 
     public void settingThemeList(List<Theme> themeList) {
+        // 초기화 안할 시 List<Theme>이 toString()을 호출하여 자동으로 객체정보값이 들어가 있음
+        this.themeList = new ArrayList<>();
         for(int i=0; i<themeList.size(); i++) {
             this.themeList.add(themeList.get(i).getCategory().getSubject());
         }
+
     }
 
 }
