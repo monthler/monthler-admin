@@ -49,6 +49,7 @@ public class GovNoticeForm {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate releaseDt; // 선정 발표일
+    private String releaseDtText; // 선정 발표일 직접입력
 
     private String withChildYn; // 아이 동반 여부 (Y/N)
     private String email;

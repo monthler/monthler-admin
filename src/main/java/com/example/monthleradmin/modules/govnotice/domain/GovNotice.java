@@ -58,6 +58,7 @@ public class GovNotice extends BaseTimeEntity {
     private LocalDate recruitmentEdDt; // 모집 기간 종료일
 
     private LocalDate releaseDt; // 선정 발표일
+    private String releaseDtText; // 선정 발표일 직접입력
 
     private String withChildYn; // 아이 동반 여부 (Y/N)
     private String email;
