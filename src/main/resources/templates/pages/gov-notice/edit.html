@@ -22,6 +22,36 @@
     <!-- date picker -->
     <script th:src="@{/vendor/datepicker/popper.min.js}"></script>
     <script th:src="@{/vendor/datepicker/rome.js}"></script>
+
+    <!-- local script -->
+    <script>
+        $(function() {
+
+            // 체류 시작/종료일
+            rome(stayStDt, {
+                dateValidator: rome.val.beforeEq(stayEdDt),
+                time: false
+            });
+            rome(stayEdDt, {
+                dateValidator: rome.val.afterEq(stayStDt),
+                time: false
+            });
+
+            // 모집 시작/종료일
+            rome(recruitmentStDt, {
+                dateValidator: rome.val.beforeEq(recruitmentEdDt),
+                time: false
+            });
+            rome(recruitmentEdDt, {
+                dateValidator: rome.val.afterEq(recruitmentStDt),
+                time: false
+            });
+
+            // 선정 발표일
+            rome(releaseDt, { time: false });
+        });
+
+    </script>
 </head>
 
 <!-- Content -->
@@ -317,33 +347,4 @@
         </form>
     </div>
 </div>
-<!-- local script -->
-<script>
-    $(function() {
-
-        // 체류 시작/종료일
-        rome(stayStDt, {
-            dateValidator: rome.val.beforeEq(stayEdDt),
-            time: false
-        });
-        rome(stayEdDt, {
-            dateValidator: rome.val.afterEq(stayStDt),
-            time: false
-        });
-
-        // 모집 시작/종료일
-        rome(recruitmentStDt, {
-            dateValidator: rome.val.beforeEq(recruitmentEdDt),
-            time: false
-        });
-        rome(recruitmentEdDt, {
-            dateValidator: rome.val.afterEq(recruitmentStDt),
-            time: false
-        });
-
-        // 선정 발표일
-        rome(releaseDt, { time: false });
-    });
-
-</script>
 </html>

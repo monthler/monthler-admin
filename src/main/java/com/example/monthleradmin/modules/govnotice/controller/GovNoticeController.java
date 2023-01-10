@@ -43,7 +43,7 @@ public class GovNoticeController {
 
     @GetMapping("/gov-notice/add")
     public String newGovNoticeForm(Model model) {
-        model.addAttribute(new GovNoticeForm());
+        model.addAttribute("govNoticeForm", new GovNoticeForm());
         return "pages/gov-notice/add";
     }
 
