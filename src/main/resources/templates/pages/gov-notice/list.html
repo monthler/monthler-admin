@@ -3,41 +3,17 @@
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
-
-<!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
+<head>
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-</th:block>
-<!-- index.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
+
     <!-- Page level plugins -->
     <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
-
-    <script>
-        function govNoticeDel(me) {
-            console.log(me.getAttribute('data-gov-notice-id'));
-            let govNoticeId = me.getAttribute('data-gov-notice-id');
-            $('#modalDelBtn')[0].setAttribute('data-gov-notice-id', govNoticeId);
-            $('#govNoticeDeleteModal').find('form').attr('action', '/gov-notice/'+govNoticeId);
-            //$('#govNoticeDeleteModal').find('form').attr('method', 'delete');
-
-            $('#govNoticeDeleteModal').modal('show');
-        }
-        function realGovNoticeDel(me) {
-            console.log(me.getAttribute('data-gov-notice-id'));
-        }
-        // $('#govNoticeDel').click(function(me){
-        //     console.log('삭제 클릭');
-        //
-        //     $('#modalDelBtn').setAttribute('data-gov-notice-id', '')
-        // });
-    </script>
-</th:block>
+</head>
 
 <!-- Content -->
 <div layout:fragment="content" class="container-fluid">
@@ -125,4 +101,23 @@
     -->
 
 </div>
+<script>
+    function govNoticeDel(me) {
+        console.log(me.getAttribute('data-gov-notice-id'));
+        let govNoticeId = me.getAttribute('data-gov-notice-id');
+        $('#modalDelBtn')[0].setAttribute('data-gov-notice-id', govNoticeId);
+        $('#govNoticeDeleteModal').find('form').attr('action', '/gov-notice/'+govNoticeId);
+        //$('#govNoticeDeleteModal').find('form').attr('method', 'delete');
+
+        $('#govNoticeDeleteModal').modal('show');
+    }
+    function realGovNoticeDel(me) {
+        console.log(me.getAttribute('data-gov-notice-id'));
+    }
+    // $('#govNoticeDel').click(function(me){
+    //     console.log('삭제 클릭');
+    //
+    //     $('#modalDelBtn').setAttribute('data-gov-notice-id', '')
+    // });
+</script>
 </html>

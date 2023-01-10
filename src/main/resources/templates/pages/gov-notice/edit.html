@@ -4,17 +4,14 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
+<head>
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
     <!-- date picker -->
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/vendor/datepicker/rome.css}">
-</th:block>
-<!-- index.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
+
     <!-- Page level plugins -->
     <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
@@ -25,37 +22,7 @@
     <!-- date picker -->
     <script th:src="@{/vendor/datepicker/popper.min.js}"></script>
     <script th:src="@{/vendor/datepicker/rome.js}"></script>
-
-    <!-- local script -->
-    <script>
-        $(function() {
-
-            // 체류 시작/종료일
-            rome(stayStDt, {
-                dateValidator: rome.val.beforeEq(stayEdDt),
-                time: false
-            });
-            rome(stayEdDt, {
-                dateValidator: rome.val.afterEq(stayStDt),
-                time: false
-            });
-
-            // 모집 시작/종료일
-            rome(recruitmentStDt, {
-                dateValidator: rome.val.beforeEq(recruitmentEdDt),
-                time: false
-            });
-            rome(recruitmentEdDt, {
-                dateValidator: rome.val.afterEq(recruitmentStDt),
-                time: false
-            });
-
-            // 선정 발표일
-            rome(releaseDt, { time: false });
-        });
-
-    </script>
-</th:block>
+</head>
 
 <!-- Content -->
 <div layout:fragment="content" class="container-fluid">
@@ -350,4 +317,33 @@
         </form>
     </div>
 </div>
+<!-- local script -->
+<script>
+    $(function() {
+
+        // 체류 시작/종료일
+        rome(stayStDt, {
+            dateValidator: rome.val.beforeEq(stayEdDt),
+            time: false
+        });
+        rome(stayEdDt, {
+            dateValidator: rome.val.afterEq(stayStDt),
+            time: false
+        });
+
+        // 모집 시작/종료일
+        rome(recruitmentStDt, {
+            dateValidator: rome.val.beforeEq(recruitmentEdDt),
+            time: false
+        });
+        rome(recruitmentEdDt, {
+            dateValidator: rome.val.afterEq(recruitmentStDt),
+            time: false
+        });
+
+        // 선정 발표일
+        rome(releaseDt, { time: false });
+    });
+
+</script>
 </html>

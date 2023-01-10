@@ -4,20 +4,17 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/default_layout}">
 
-<!-- index.html 고유 CSS 추가 -->
-<th:block layout:fragment="css">
+<head>
     <!-- Custom styles for this page -->
     <link th:href="@{/vendor/datatables/dataTables.bootstrap4.min.css}" rel="stylesheet">
-</th:block>
-<!-- index.html 고유 스크립트 추가 -->
-<th:block layout:fragment="script">
+
     <!-- Page level plugins -->
     <script th:src="@{/vendor/datatables/jquery.dataTables.min.js}"></script>
     <script th:src="@{/vendor/datatables/dataTables.bootstrap4.min.js}"></script>
 
     <!-- Page level custom scripts -->
     <script th:src="@{/js/demo/datatables-demo.js}"></script>
-</th:block>
+</head>
 
 <!-- Content -->
 <div layout:fragment="content" class="container-fluid">
